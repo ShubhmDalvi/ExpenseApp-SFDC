@@ -1,0 +1,51 @@
+<template>
+    <lightning-card title="Manager Expense Hub" icon-name="standard:dashboard">
+        <div class="slds-p-around_medium">
+            
+            <!-- Top Section: Chart & Metrics -->
+            <div class="slds-grid slds-gutters slds-wrap slds-m-bottom_large">
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_7-of-12">
+                    <lightning-card title="Spending by Category (Approved)">
+                        <div style="position: relative; height: 260px; padding: 10px;">
+                            <canvas class="donutChart" lwc:dom="manual"></canvas>
+                        </div>
+                    </lightning-card>
+                </div>
+                
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_5-of-12">
+                    <lightning-card title="Quick Metrics">
+                        <div class="slds-p-around_medium">
+                            <div class="slds-box slds-theme_shade slds-m-bottom_small">
+                                <p class="slds-text-heading_small">Pending Approvals</p>
+                                <p class="slds-text-heading_large slds-text-color_error">{pendingCount}</p>
+                            </div>
+                            <div class="slds-box slds-theme_shade">
+                                <p class="slds-text-heading_small">Total Approved Spend</p>
+                                <p class="slds-text-heading_large slds-text-color_success">${totalApprovedSpent}</p>
+                            </div>
+                        </div>
+                    </lightning-card>
+                </div>
+            </div>
+
+            <!-- Bottom Section: Pending Approval Datatable -->
+            <lightning-card title="Pending Approvals Queue">
+                <template lwc:if={hasPendingExpenses}>
+                    <lightning-datatable
+                        key-field="Id"
+                        data={pendingExpenses}
+                        columns={columns}
+                        hide-checkbox-column
+                        onrowaction={handleRowAction}>
+                    </lightning-datatable>
+                </template>
+                <template lwc:else>
+                    <div class="slds-p-around_medium slds-text-color_weak slds-text-align_center">
+                        🎉 All caught up! No pending expenses requiring approval.
+                    </div>
+                </template>
+            </lightning-card>
+
+        </div>
+    </lightning-card>
+</template>

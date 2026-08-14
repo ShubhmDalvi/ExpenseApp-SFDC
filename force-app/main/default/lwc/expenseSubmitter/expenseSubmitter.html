@@ -1,0 +1,40 @@
+<template>
+    <lightning-card title="Submit New Expense" icon-name="standard:expense">
+        <div class="slds-p-around_medium">
+            <lightning-record-edit-form 
+                object-api-name="Expense__c" 
+                onsuccess={handleSuccess}
+                onerror={handleError}>
+                
+                <lightning-messages></lightning-messages>
+
+                <div class="slds-grid slds-gutters slds-wrap">
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                        <lightning-input-field field-name="Expense_Category__c" required></lightning-input-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                        <lightning-input-field field-name="Amount__c" required></lightning-input-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                        <lightning-input-field field-name="Expense_Date__c" required></lightning-input-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                        <lightning-input-field field-name="Manager__c" required></lightning-input-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1">
+                        <lightning-input-field field-name="Description__c"></lightning-input-field>
+                    </div>
+                    
+                    <!-- Sets status directly to Pending Approval so the Flow triggers -->
+                    <lightning-input-field field-name="Status__c" value="Pending Approval" class="slds-hide"></lightning-input-field>
+                    <!-- Automatically assigns the logged-in user as Employee -->
+                    <lightning-input-field field-name="Employee__c" value={userId} class="slds-hide"></lightning-input-field>
+                </div>
+
+                <div class="slds-m-top_medium slds-text-align_right">
+                    <lightning-button variant="brand" type="submit" label="Submit for Approval" icon-name="utility:send"></lightning-button>
+                </div>
+            </lightning-record-edit-form>
+        </div>
+    </lightning-card>
+</template>
