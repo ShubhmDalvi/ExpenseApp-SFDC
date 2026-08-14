@@ -39,11 +39,15 @@ sf apex run test --class-names ExpenseAppTest --code-coverage --result-format hu
 ## Architecture
 
 ```text
-Employee → LWC → Expense__c → Flow/Approval
-                         ↓
-                  Scheduled Apex
-                         ↓
-                Expense_Summary__c
-                         ↓
-                 Manager Dashboard
+[ Employee ] ──► [ expenseSubmitter (LWC) ] ──► [ Expense__c ] ──► [ Flow / Approval Process ]
+                                                       │                         │
+                                                       │ (Monthly Rollup)        │ (Approve/Reject)
+                                                       ▼                         ▼
+                                           [ MonthlyExpenseAggregator ]   [ ExpenseController (Apex) ]
+                                                       │                         │
+                                                       ▼                         ▼
+                                            [ Expense_Summary__c ] ───► [ managerDashboard (LWC) ]
+                                                                                 ▲
+                                                                                 │
+                                                                            [ Manager ]
 ```
